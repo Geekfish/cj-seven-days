@@ -1,25 +1,15 @@
 (ns two.core)
-(defn big [st n]
-    (> (count st) n)
-)
-(defn collection-type [col]
-    (println col "is a" 
-        (cond
-            (list? col) :list
-            (vector? col) :vector
-            (map? col) :map
-            :else :invalid-type
-        )))
 
-(defn test-collection-type []
-   (map collection-type [
-        [1 2 3 4 5] '(6 7 8 9) {:a "a", :b "b", :c "c"} :foo
-    ])
-)
+(defmacro unless [test body else-body]
+  (list 'if (list 'not test) body else-body))
+
+(defn test-macro [test]
+  (unless test
+          (println "This should normally happen")
+          (println "Fuuuuuuuuuu-")))
+
 (defn -main [& args]
-    (println "(big st n)")
-    (println (big "Hello world" 10))
-    (println (big "Hello foo" 10))
-
-    (test-collection-type)
+  (test-macro true)
+  (test-macro false)
+      
 )
